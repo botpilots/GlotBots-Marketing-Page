@@ -16,7 +16,7 @@
             <div class="logo">
                 <img src="img/logo.png" alt="GlotBots Logo">
                 <div class="logo-text">
-                    <span>G</span><span>l</span><span class="globe-o"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="5"/><g transform="rotate(23.5, 50, 50)"><path class="lat" d="M5 50 H95" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M7 35 H93" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 20 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M28 10 H72" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M7 65 H93" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 80 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M28 90 H72" fill="none" stroke="currentColor" stroke-width="2"/><path class="long" d="M50 5 V95" fill="none" stroke="currentColor" stroke-width="2"/><ellipse class="long-spin" cx="50" cy="50" rx="45" ry="45" fill="none" stroke="currentColor" stroke-width="2"/><ellipse class="long-spin" cx="50" cy="50" rx="45" ry="45" fill="none" stroke="currentColor" stroke-width="2"/><ellipse class="long-spin" cx="50" cy="50" rx="45" ry="45" fill="none" stroke="currentColor" stroke-width="2"/></g></svg></span><span>t</span><span>B</span><span class="robot-o"><svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="currentColor" stroke-width="5"/><circle class="eye" cx="35" cy="45" r="6" fill="currentColor"/><circle class="eye" cx="65" cy="45" r="6" fill="currentColor"/><path d="M35 70 Q50 80 65 70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span>t</span><span>s</span>
+                    <span>G</span><span>l</span><span class="globe-o"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="5"/><g transform="rotate(23.5, 50, 50)"><path class="lat" d="M5 50 H95" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M7 35 H93" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 20 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M28 10 H72" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M7 65 H93" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 80 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M28 90 H72" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" fill="none" stroke="currentColor" stroke-width="2"/></g></svg></span><span>t</span><span>B</span><span class="robot-o"><svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="currentColor" stroke-width="5"/><circle class="eye" cx="35" cy="45" r="6" fill="currentColor"/><circle class="eye" cx="65" cy="45" r="6" fill="currentColor"/><path d="M35 70 Q50 80 65 70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span>t</span><span>s</span>
                 </div>
             </div>
         </nav>
@@ -136,36 +136,51 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Globe Animation (Spinning effect)
             const longs = document.querySelectorAll('.long-spin');
+            
+            // Configuration
+            const duration = 6; // Slower rotation
+            const radius = 45;
+            const center = 50;
+            
             longs.forEach((el, i) => {
-                // Initialize opacity to avoid flash
-                gsap.set(el, { opacity: 1 });
+                const startAngle = i * (360 / longs.length); // Distribute evenly
                 
-                gsap.to(el, {
-                    scaleX: -1,
-                    transformOrigin: "center",
-                    duration: 2,
+                // Animate a proxy object
+                const proxy = { angle: startAngle };
+                
+                gsap.to(proxy, {
+                    angle: startAngle + 360,
+                    duration: duration,
                     repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut",
-                    delay: -i * (2 / 3), // Stagger the start time for even distribution
-                    onUpdate: function() {
-                        // Calculate opacity based on scaleX (closest to 1/-1 = edge = fade)
-                        // Scale moves -1 to 1.
-                        // We want high opacity at 0, low opacity at 1/-1.
-                        // However, standard globes usually have consistent line visibility.
-                        // The user requested "simulating that the edge fades away behind it".
-                        // Let's fade out when scale is near 1 or -1.
+                    ease: "none",
+                    onUpdate: () => {
+                        const rad = proxy.angle * (Math.PI / 180);
+                        const sin = Math.sin(rad);
+                        const cos = Math.cos(rad);
                         
-                        // Get current scale (this.targets()[0] might be needed or using GSAP utils)
-                        const currentScale = gsap.getProperty(el, "scaleX");
-                        const absScale = Math.abs(currentScale);
+                        // Width of the ellipse at this angle
+                        const rx = Math.abs(radius * sin);
                         
-                        // Fade logic:
-                        // At scale 0 (center): opacity 1
-                        // At scale 1 (edge): opacity 0.3
-                        // Simple linear interpolation: 1 - (absScale * 0.7)
-                        const opacity = 1 - (absScale * 0.7); 
-                        el.style.opacity = opacity;
+                        // Update path using Arc command
+                        // M 50 5 (Top Pole)
+                        // A rx 45 0 0 [sweep] 50 95 (Bottom Pole)
+                        // sweep: 1 if curving right (sin > 0), 0 if curving left (sin < 0)
+                        const sweep = sin >= 0 ? 1 : 0;
+                        el.setAttribute("d", `M 50 5 A ${rx} 45 0 0 ${sweep} 50 95`);
+                        
+                        // Opacity Logic
+                        // Front face: cos > 0 (Left to Right) -> Bright
+                        // Back face: cos < 0 (Right to Left) -> Faded/Invisible
+                        if (cos > 0) {
+                            // Moving Left to Right (Front)
+                            // Fade edges: sin=1 (edge) -> opacity 0
+                            // Center: sin=0 -> opacity 1
+                            // We can use cos directly for opacity sine cos is 1 at center and 0 at edges
+                            el.style.opacity = Math.pow(cos, 0.5); // Smooth fade
+                        } else {
+                            // Moving Right to Left (Back)
+                            el.style.opacity = 0;
+                        }
                     }
                 });
             });
