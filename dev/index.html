@@ -137,6 +137,9 @@
             // Globe Animation (Spinning effect)
             const longs = document.querySelectorAll('.long-spin');
             longs.forEach((el, i) => {
+                // Initialize opacity to avoid flash
+                gsap.set(el, { opacity: 1 });
+                
                 gsap.to(el, {
                     scaleX: -1,
                     transformOrigin: "center",
@@ -144,7 +147,26 @@
                     repeat: -1,
                     yoyo: true,
                     ease: "sine.inOut",
-                    delay: -i * (2 / 3) // Stagger the start time for even distribution (60 degree offset)
+                    delay: -i * (2 / 3), // Stagger the start time for even distribution
+                    onUpdate: function() {
+                        // Calculate opacity based on scaleX (closest to 1/-1 = edge = fade)
+                        // Scale moves -1 to 1.
+                        // We want high opacity at 0, low opacity at 1/-1.
+                        // However, standard globes usually have consistent line visibility.
+                        // The user requested "simulating that the edge fades away behind it".
+                        // Let's fade out when scale is near 1 or -1.
+                        
+                        // Get current scale (this.targets()[0] might be needed or using GSAP utils)
+                        const currentScale = gsap.getProperty(el, "scaleX");
+                        const absScale = Math.abs(currentScale);
+                        
+                        // Fade logic:
+                        // At scale 0 (center): opacity 1
+                        // At scale 1 (edge): opacity 0.3
+                        // Simple linear interpolation: 1 - (absScale * 0.7)
+                        const opacity = 1 - (absScale * 0.7); 
+                        el.style.opacity = opacity;
+                    }
                 });
             });
 

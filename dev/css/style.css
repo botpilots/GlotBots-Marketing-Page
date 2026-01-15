@@ -58,6 +58,10 @@ nav {
     top: 0.05em; /* Nudge down to sit on baseline */
 }
 
+.long-spin {
+    vector-effect: non-scaling-stroke;
+}
+
 .globe-o svg, .robot-o svg {
     width: 100%;
     height: 100%;
