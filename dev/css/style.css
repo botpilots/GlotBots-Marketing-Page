@@ -201,6 +201,76 @@ footer a:hover {
     color: var(--text-muted);
 }
 
+.content-section {
+    padding: 6rem 0;
+}
+
+.content-section h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    letter-spacing: -2px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.list-item {
+    margin-bottom: 2rem;
+}
+
+.list-item h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.list-item p {
+    color: var(--text-muted);
+}
+
+.testimonial {
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 1.5rem;
+    border-left: 4px solid var(--highlight);
+    margin: 4rem 0;
+}
+
+.testimonial blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial cite {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.about-founder {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+}
+
+.about-founder .content {
+    flex: 1;
+}
+
+.about-founder h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
@@ -213,5 +283,15 @@ footer a:hover {
     
     .feature-card {
         padding: 1.5rem;
+    }
+
+    .grid-2, .about-founder {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .content-section h2 {
+        font-size: 2rem;
     }
 }
