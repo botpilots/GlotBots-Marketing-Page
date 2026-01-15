@@ -14,7 +14,9 @@
         <nav>
             <div class="logo">
                 <img src="img/logo.png" alt="GlotBots Logo">
-                <span>GlotBots</span>
+                <div class="logo-text">
+                    <span>G</span><span>l</span><span class="globe-o"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="5"/><path class="lat" d="M5 50 H95" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 30 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 70 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="long" d="M50 5 V95" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" d="M50 5 Q20 50 50 95 Q80 50 50 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span>t</span><span>B</span><span class="robot-o"><svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="currentColor" stroke-width="5"/><circle class="eye" cx="35" cy="45" r="6" fill="currentColor"/><circle class="eye" cx="65" cy="45" r="6" fill="currentColor"/><path d="M35 70 Q50 80 65 70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span>t</span><span>s</span>
+                </div>
             </div>
         </nav>
     </header>
@@ -128,5 +130,21 @@
         <p>Contact the founder: <a href="mailto:oskar.huledal@glotbots.com">oskar.huledal@glotbots.com</a></p>
         <div class="copyright">© 2026 GlotBots. All rights reserved. The Next Paradigm in Translation.</div>
     </footer>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const eyes = document.querySelectorAll('.robot-o .eye');
+            eyes.forEach(eye => {
+                const rect = eye.getBoundingClientRect();
+                const eyeX = rect.left + rect.width / 2;
+                const eyeY = rect.top + rect.height / 2;
+                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+                const distance = Math.min(4, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 20);
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                eye.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
