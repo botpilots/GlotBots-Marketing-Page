@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     <header>
@@ -15,7 +16,7 @@
             <div class="logo">
                 <img src="img/logo.png" alt="GlotBots Logo">
                 <div class="logo-text">
-                    <span>G</span><span>l</span><span class="globe-o"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="5"/><path class="lat" d="M5 50 H95" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 30 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 70 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="long" d="M50 5 V95" fill="none" stroke="currentColor" stroke-width="2"/><path class="long-spin" d="M50 5 Q20 50 50 95 Q80 50 50 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span>t</span><span>B</span><span class="robot-o"><svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="currentColor" stroke-width="5"/><circle class="eye" cx="35" cy="45" r="6" fill="currentColor"/><circle class="eye" cx="65" cy="45" r="6" fill="currentColor"/><path d="M35 70 Q50 80 65 70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span>t</span><span>s</span>
+                    <span>G</span><span>l</span><span class="globe-o"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="5"/><g transform="rotate(23.5, 50, 50)"><path class="lat" d="M5 50 H95" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 30 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="lat" d="M15 70 H85" fill="none" stroke="currentColor" stroke-width="2"/><path class="long" d="M50 5 V95" fill="none" stroke="currentColor" stroke-width="2"/><ellipse class="long-spin" cx="50" cy="50" rx="45" ry="45" fill="none" stroke="currentColor" stroke-width="2"/></g></svg></span><span>t</span><span>B</span><span class="robot-o"><svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="currentColor" stroke-width="5"/><circle class="eye" cx="35" cy="45" r="6" fill="currentColor"/><circle class="eye" cx="65" cy="45" r="6" fill="currentColor"/><path d="M35 70 Q50 80 65 70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span>t</span><span>s</span>
                 </div>
             </div>
         </nav>
@@ -132,17 +133,49 @@
     </footer>
 
     <script>
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Globe Animation (Spinning effect)
+            gsap.to(".long-spin", {
+                scaleX: -1,
+                transformOrigin: "center",
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "none" // Linear spin looks continuous for orbit lines
+            });
+
+            // Robot Eye Tracking
+            const robot = document.querySelector('.robot-o');
             const eyes = document.querySelectorAll('.robot-o .eye');
-            eyes.forEach(eye => {
-                const rect = eye.getBoundingClientRect();
-                const eyeX = rect.left + rect.width / 2;
-                const eyeY = rect.top + rect.height / 2;
-                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-                const distance = Math.min(4, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 20);
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                eye.style.transform = `translate(${x}px, ${y}px)`;
+            
+            // Create quick setters for performance
+            const xSetters = Array.from(eyes).map(eye => gsap.quickTo(eye, "x", {duration: 0.4, ease: "power3"}));
+            const ySetters = Array.from(eyes).map(eye => gsap.quickTo(eye, "y", {duration: 0.4, ease: "power3"}));
+
+            window.addEventListener('mousemove', (e) => {
+                if (!robot) return;
+                
+                const rect = robot.getBoundingClientRect();
+                const faceCenterX = rect.left + rect.width / 2;
+                const faceCenterY = rect.top + rect.height / 2;
+                
+                // Calculate angle from center of face
+                const angle = Math.atan2(e.clientY - faceCenterY, e.clientX - faceCenterX);
+                
+                // Calculate distance from center of face, clamped
+                // The max movement radius for eyes within the sockets
+                const maxRadius = 4; 
+                const distRaw = Math.hypot(e.clientX - faceCenterX, e.clientY - faceCenterY);
+                // Smooth falloff for distance
+                const distance = Math.min(maxRadius, distRaw / 15);
+                
+                // Calculate shared offset for both eyes (parallel gaze)
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+
+                // Apply to both eyes
+                xSetters.forEach(setX => setX(moveX));
+                ySetters.forEach(setY => setY(moveY));
             });
         });
     </script>
