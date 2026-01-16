@@ -245,10 +245,6 @@ h1 {
     transition: border-color 0.3s;
 }
 
-.feature-card:hover {
-    border-color: var(--primary);
-}
-
 .feature-card .icon {
     font-size: 2rem;
     margin-bottom: 1.5rem;
@@ -309,7 +305,6 @@ footer a:hover {
 }
 
 .content-section {
-    padding: 3rem 0;
 }
 
 .content-section h2 {
