@@ -117,11 +117,11 @@ Comparison with Coding Agents Unicorns
 ## Price Model
 TechDoc Translation Agent
 
-| Tier | Char Volume | Rollover Allowance | $/mo | Overage $/word |
-| :--- | :--- | :--- | :--- | :--- |
-| Tier 1 - Starter | 1M | 2M | $995 | $0.005 |
-| Tier 2 - Agency | 3M | 6M | $1,995 | $0.00332 |
-| Tier 3 - Enterprise | 10M | 20M | $4,995 | $0.00250 |
+| Tier | Char Volume | Rollover Allowance | $/mo | Overage $/word | Support/mo 
+| :--- | :--- | :--- | :--- | :--- | 
+| Tier 1 - Starter | 1M | 2M | $995 | $0.005 | 8 hours
+| Tier 2 - Agency | 3M | 6M | $1,995 | $0.00332 | 16 hours
+| Tier 3 - Enterprise | 10M | 20M | $4,995 | $0.00250 | 24 hours
 
 *(1M chars is ~200k words in English)*
 
