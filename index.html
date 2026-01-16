@@ -210,6 +210,7 @@
 
             // Wink Sequence Logic
             const startWinkSequence = () => {
+                if (isWinkingSequence) return;
                 isWinkingSequence = true;
                 
                 // 1. Look straight ahead (center)
@@ -226,6 +227,7 @@
                         yoyo: true,
                         repeat: 1,
                         onComplete: () => {
+                            gsap.set(winkEye, { scaleY: 1 });
                             // 3. Wait another 1s looking straight, then resume
                             setTimeout(() => {
                                 isWinkingSequence = false;
