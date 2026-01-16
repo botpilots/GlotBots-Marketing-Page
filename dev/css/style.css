@@ -56,6 +56,7 @@ nav {
     margin: 0 0.025em;
     position: relative;
     top: 0.05em; /* Nudge down to sit on baseline */
+    color: var(--primary);
 }
 
 .robot-o {
@@ -65,6 +66,7 @@ nav {
     margin: 0 -0.04em;
     position: relative;
     top: 0.05em; /* Nudge down to sit on baseline */
+    color: var(--highlight);
 }
 
 .long-spin {
