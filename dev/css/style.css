@@ -42,31 +42,48 @@ nav {
     font-size: 8.5rem;
     font-weight: 800;
     letter-spacing: -1px;
+    line-height: 1;
+    /* Baseline shift for inline SVG "O" icons (negative values move the icon DOWN) */
+    --logo-icon-baseline-shift: -0.02em;
+    /* Optional fine-tuning (leave unset to inherit --logo-icon-baseline-shift) */
+    /* --logo-globe-baseline-shift: -0.02em; */
+    --logo-robot-baseline-shift: -0.070em;
 }
 
 .logo-text {
-    display: flex;
-    align-items: baseline;
+    display: inline-block;
 }
 
 .globe-o {
-    display: inline-flex;
-    width: 0.60em;
-    height: 0.60em;
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
     margin: 0em 0.025em;
-    position: relative;
-    top: 0.05em; /* Nudge down to sit on baseline */
+    /* Edge color (outer ring + any elements using currentColor) */
     color: var(--primary);
+    vertical-align: var(--logo-globe-baseline-shift, var(--logo-icon-baseline-shift));
+    /* Gridline color (interior spinning lines) */
+    --globe-grid: var(--primary);
+}
+
+@supports (color: color-mix(in srgb, #000, #fff)) {
+    .globe-o {
+        --globe-grid: var(--primary);
+    }
+}
+
+.globe-o .lat,
+.globe-o .long-spin {
+    stroke: var(--globe-grid);
 }
 
 .robot-o {
-    display: inline-flex;
+    display: inline-block;
     width: 0.75em;
     height: 0.75em;
     margin: 0 -0.04em;
-    position: relative;
-    top: 0.05em; /* Nudge down to sit on baseline */
     color: var(--highlight);
+    vertical-align: var(--logo-robot-baseline-shift, var(--logo-icon-baseline-shift));
 }
 
 .long-spin {
@@ -76,6 +93,11 @@ nav {
 .globe-o svg, .robot-o svg {
     width: 100%;
     height: 100%;
+}
+
+/* If the globe ring radius exceeds the SVG viewBox (e.g. r>50), avoid clipping */
+.globe-o svg {
+    overflow: visible;
 }
 
 .eye-socket {
@@ -189,6 +211,7 @@ h1 {
 
 .logo-highlight {
     background: linear-gradient(to right, var(--primary), var(--highlight));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent; /* Fallback */
@@ -302,9 +325,6 @@ footer a:hover {
     margin-top: 3rem;
     font-size: 0.8rem;
     color: var(--text-muted);
-}
-
-.content-section {
 }
 
 .content-section h2 {
