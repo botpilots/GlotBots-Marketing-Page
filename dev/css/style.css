@@ -299,6 +299,10 @@ h1 {
     margin: 2rem 0;
 }
 
+h2 {
+	text-align: center;
+}
+
 .sass-section h2 {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
