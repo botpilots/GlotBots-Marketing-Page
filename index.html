@@ -36,7 +36,7 @@
             <p class="subtitle">The maverick translation platform delivering next-gen machine translation that <strong>slashes your costs</strong> and <strong>speeds up your localisation workflows</strong>.</p>
             
             <div class="cta-container">
-                <a href="mailto:oskar.huledal@glotbots.com" class="cta-button">Get a Free Demo</a>
+                <a href="#" class="cta-button obfuscated-mail" data-enc-email="bnBkL3R1cGN1cG1oQW1iZWZtdmkvc2JsdHA=">Get a Free Demo</a>
                 <p class="cta-hint">Experience the quality with your own content.</p>
             </div>
         </section>
@@ -134,7 +134,7 @@
         <section class="hero" style="min-height: auto; padding: 4rem 1rem;">
             <h2>Ready to experience the next paradigm in translation?</h2>
             <div class="cta-container" style="margin-top: 2rem;">
-                <a href="mailto:oskar.huledal@glotbots.com" class="cta-button">Get a Free Demo</a>
+                <a href="#" class="cta-button obfuscated-mail" data-enc-email="bnBkL3R1cGN1cG1oQW1iZWZtdmkvc2JsdHA=">Get a Free Demo</a>
             </div>
         </section>
     <footer>
@@ -272,6 +272,32 @@
                 if (!isWinkingSequence) {
                     updateEyes(e.clientX, e.clientY);
                 }
+            });
+
+            // Email Obfuscation Logic
+            const decodeEmail = (encoded) => {
+                try {
+                    // 1. Base64 decode
+                    const shifted = atob(encoded);
+                    // 2. Unshift characters (-1 ASCII)
+                    const reversed = shifted.split('').map(c => String.fromCharCode(c.charCodeAt(0) - 1)).join('');
+                    // 3. Reverse string
+                    return reversed.split('').reverse().join('');
+                } catch (e) {
+                    console.error('Error decoding email', e);
+                    return '';
+                }
+            };
+
+            document.querySelectorAll('.obfuscated-mail').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const encoded = link.getAttribute('data-enc-email');
+                    if (encoded) {
+                        const email = decodeEmail(encoded);
+                        window.location.href = `mailto:${email}`;
+                    }
+                });
             });
         });
     </script>
