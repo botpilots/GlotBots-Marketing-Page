@@ -39,34 +39,58 @@ nav {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 8.5rem;
+    /* Smoothly scale logo size across breakpoints (prevents "snap" on mobile) */
+    font-size: clamp(4rem, 10vw, 12.5rem);
     font-weight: 800;
     letter-spacing: -1px;
+    line-height: 1;
+    /* Baseline shift for inline SVG "O" icons (negative values move the icon DOWN) */
+    --logo-icon-baseline-shift: -0.005em;
+    /* Optional fine-tuning (leave unset to inherit --logo-icon-baseline-shift) */
+    /* --logo-globe-baseline-shift: -0.02em; */
+    --logo-robot-baseline-shift: -0.05em;
 }
 
 .logo-text {
-    display: flex;
-    align-items: baseline;
+    display: inline-block;
 }
 
 .globe-o {
-    display: inline-flex;
-    width: 0.65em;
-    height: 0.65em;
-    margin: 0 0.025em;
-    position: relative;
-    top: 0.05em; /* Nudge down to sit on baseline */
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    margin: 0em 0.005em;
+    /* Edge color (outer ring + any elements using currentColor) */
     color: var(--primary);
+    vertical-align: var(--logo-globe-baseline-shift, var(--logo-icon-baseline-shift));
+    /* Gridline color (interior spinning lines) */
+    --globe-grid: var(--primary);
+}
+
+@supports (color: color-mix(in srgb, #000, #fff)) {
+    .globe-o {
+        --globe-grid: var(--primary);
+    }
+}
+
+.globe-o .lat,
+.globe-o .long-spin {
+    stroke: var(--globe-grid);
 }
 
 .robot-o {
-    display: inline-flex;
-    width: 0.75em;
-    height: 0.75em;
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
     margin: 0 -0.04em;
-    position: relative;
-    top: 0.05em; /* Nudge down to sit on baseline */
     color: var(--highlight);
+    vertical-align: var(--logo-robot-baseline-shift, var(--logo-icon-baseline-shift));
+    /* Change this to make the robot's outer rounded-square outline thicker/thinner */
+    --robot-outline-stroke-width: 9px;
+}
+
+.robot-o rect {
+    stroke-width: var(--robot-outline-stroke-width);
 }
 
 .long-spin {
@@ -76,6 +100,11 @@ nav {
 .globe-o svg, .robot-o svg {
     width: 100%;
     height: 100%;
+}
+
+/* If the globe ring radius exceeds the SVG viewBox (e.g. r>50), avoid clipping */
+.globe-o svg {
+    overflow: visible;
 }
 
 .eye-socket {
@@ -189,6 +218,7 @@ h1 {
 
 .logo-highlight {
     background: linear-gradient(to right, var(--primary), var(--highlight));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent; /* Fallback */
@@ -266,7 +296,18 @@ h1 {
     background: linear-gradient(180deg, var(--background) 0%, #0a0a0a 100%);
     border-radius: 2rem;
     border: 1px solid var(--border);
-    margin: 2rem 0;
+    margin: 4rem 0;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	font-size: 2rem;
+	margin-bottom: 1.5rem;
+	letter-spacing: -1px;
+	text-align: center;
 }
 
 .sass-section h2 {
@@ -280,6 +321,10 @@ h1 {
     color: var(--text-muted);
     max-width: 800px;
     margin: 0 auto;
+}
+
+.content-section {
+	padding: 6rem 0;
 }
 
 footer {
@@ -302,9 +347,6 @@ footer a:hover {
     margin-top: 3rem;
     font-size: 0.8rem;
     color: var(--text-muted);
-}
-
-.content-section {
 }
 
 .content-section h2 {
@@ -374,10 +416,6 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
-    .logo {
-        font-size: 2rem;
-    }
-    
     h1 {
         font-size: 2.5rem;
         letter-spacing: -1px;
