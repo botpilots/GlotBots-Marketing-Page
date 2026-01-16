@@ -45,10 +45,10 @@ nav {
     letter-spacing: -1px;
     line-height: 1;
     /* Baseline shift for inline SVG "O" icons (negative values move the icon DOWN) */
-    --logo-icon-baseline-shift: -0.02em;
+    --logo-icon-baseline-shift: -0.005em;
     /* Optional fine-tuning (leave unset to inherit --logo-icon-baseline-shift) */
     /* --logo-globe-baseline-shift: -0.02em; */
-    --logo-robot-baseline-shift: -0.070em;
+    --logo-robot-baseline-shift: -0.05em;
 }
 
 .logo-text {
@@ -59,7 +59,7 @@ nav {
     display: inline-block;
     width: 0.55em;
     height: 0.55em;
-    margin: 0em 0.025em;
+    margin: 0em 0.005em;
     /* Edge color (outer ring + any elements using currentColor) */
     color: var(--primary);
     vertical-align: var(--logo-globe-baseline-shift, var(--logo-icon-baseline-shift));
@@ -80,11 +80,17 @@ nav {
 
 .robot-o {
     display: inline-block;
-    width: 0.75em;
-    height: 0.75em;
+    width: 0.7em;
+    height: 0.7em;
     margin: 0 -0.04em;
     color: var(--highlight);
     vertical-align: var(--logo-robot-baseline-shift, var(--logo-icon-baseline-shift));
+    /* Change this to make the robot's outer rounded-square outline thicker/thinner */
+    --robot-outline-stroke-width: 9px;
+}
+
+.robot-o rect {
+    stroke-width: var(--robot-outline-stroke-width);
 }
 
 .long-spin {
