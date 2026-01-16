@@ -85,6 +85,38 @@ nav {
     fill: var(--background);
 }
 
+.robot-eye-left {
+    transform-origin: 37px 50px;
+    animation: blink 8s infinite;
+}
+
+.robot-eye-right {
+    transform-origin: 63px 50px;
+    animation: blink 8s infinite;
+}
+
+.robot-eye-wink {
+    transform-origin: 63px 50px;
+}
+
+@keyframes wink {
+    0%, 2%, 100% {
+        transform: scaleY(1);
+    }
+    1% {
+        transform: scaleY(0.1);
+    }
+}
+
+@keyframes blink {
+    0%, 3%, 100% {
+        transform: scaleY(1);
+    }
+    1.5% {
+        transform: scaleY(0.1);
+    }
+}
+
 .mouth-smile {
     transition: opacity 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-origin: 50% 75%;
