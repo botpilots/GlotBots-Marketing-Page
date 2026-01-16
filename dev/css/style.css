@@ -62,7 +62,7 @@ nav {
     display: inline-flex;
     width: 0.75em;
     height: 0.75em;
-    margin: 0 -0.03em;
+    margin: 0 -0.04em;
     position: relative;
     top: 0.05em; /* Nudge down to sit on baseline */
 }
