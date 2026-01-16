@@ -149,7 +149,7 @@ main {
 
 .hero {
     text-align: center;
-    padding: 2rem 0 6rem 0;
+    padding: 2rem 0 3rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -174,10 +174,24 @@ h1 {
     letter-spacing: -3px;
 }
 
-.highlight {
+.deepl-mud {
+    color: #0c65a9; /* DeepL Navy Blue */
+    text-shadow: 0 0 20px rgba(4, 43, 72, 0.5); /* Slight glow for visibility on black */
+}
+
+.logo-glot {
+    color: var(--primary);
+}
+
+.logo-bots {
+    color: var(--highlight);
+}
+
+.logo-highlight {
     background: linear-gradient(to right, var(--primary), var(--highlight));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
 }
 
 .subtitle {
@@ -220,7 +234,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 4rem 0;
+    padding: 2rem 0;
 }
 
 .feature-card {
@@ -238,6 +252,7 @@ h1 {
 .feature-card .icon {
     font-size: 2rem;
     margin-bottom: 1.5rem;
+	margin-right: 0.5rem;
 }
 
 .feature-card h3 {
@@ -251,11 +266,11 @@ h1 {
 
 .sass-section {
     text-align: center;
-    padding: 6rem 2rem;
+    padding: 3rem 2rem;
     background: linear-gradient(180deg, var(--background) 0%, #0a0a0a 100%);
     border-radius: 2rem;
     border: 1px solid var(--border);
-    margin: 4rem 0;
+    margin: 2rem 0;
 }
 
 .sass-section h2 {
@@ -273,7 +288,7 @@ h1 {
 
 footer {
     text-align: center;
-    padding: 6rem 2rem;
+    padding: 3rem 2rem;
     border-top: 1px solid var(--border);
 }
 
@@ -294,7 +309,7 @@ footer a:hover {
 }
 
 .content-section {
-    padding: 6rem 0;
+    padding: 3rem 0;
 }
 
 .content-section h2 {
@@ -329,7 +344,7 @@ footer a:hover {
     padding: 3rem;
     border-radius: 1.5rem;
     border-left: 4px solid var(--highlight);
-    margin: 4rem 0;
+    margin: 2rem 0;
 }
 
 .testimonial blockquote {
@@ -374,7 +389,7 @@ footer a:hover {
     }
     
     .hero {
-        padding: 4rem 0;
+        padding: 2rem 0;
     }
     
     .feature-card {
