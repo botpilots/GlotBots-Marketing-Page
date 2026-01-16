@@ -39,7 +39,7 @@ nav {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 6.5rem;
+    font-size: 8.5rem;
     font-weight: 800;
     letter-spacing: -1px;
 }
@@ -62,7 +62,7 @@ nav {
     display: inline-flex;
     width: 0.75em;
     height: 0.75em;
-    margin: 0 0.025em;
+    margin: 0 -0.03em;
     position: relative;
     top: 0.05em; /* Nudge down to sit on baseline */
 }
@@ -85,6 +85,28 @@ nav {
     fill: var(--background);
 }
 
+.mouth-smile {
+    transition: opacity 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: 50% 75%;
+}
+
+.mouth-surprised {
+    opacity: 0;
+    transform: scale(0.5);
+    transform-origin: 50% 75%;
+    transition: opacity 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.robot-o:hover .mouth-smile {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.robot-o:hover .mouth-surprised {
+    opacity: 1;
+    transform: scale(1);
+}
+
 main {
     max-width: 1200px;
     margin: 0 auto;
@@ -93,7 +115,7 @@ main {
 
 .hero {
     text-align: center;
-    padding: 6rem 0;
+    padding: 2rem 0 6rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
