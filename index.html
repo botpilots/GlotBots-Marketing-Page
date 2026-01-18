@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlotBots | The Translation Agent Platform</title>
+    <title>GlotBots</title>
     <link rel="stylesheet" href="dev/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +45,7 @@
 
     <main>
 
-        <section class="content-section">
+        <section class="content-section fade-in-section">
             <h2>Ready to level-up your Machine Translation?</h2>
             <p style="max-width: 800px; margin: 0 auto 1.5rem auto; text-align: center; color: var(--text-secondary); line-height: 1.6;">
                 <b>Stop using 10-year-old tech for today's content.</b> In the latest global benchmark (WMT25), LLMs are winning across the board, proving that general purpose language models beat the former pattern-matching technology of NMT.
@@ -54,7 +54,7 @@
                 GlotBots orchestrates this frontier intelligence into <b>specialized agents</b> to deliver machine translations having the highest quality of the industry.
             </p>
 		</section>
-		<section class="content-section">
+		<section class="content-section fade-in-section">
 			<h2>The LLM Advantage</h2>
 			<div class="grid-2">
                 <div class="list-items">
@@ -79,7 +79,7 @@
 
                 </div>
             </div>
-		<section class="sass-section">
+		<section class="sass-section fade-in-section">
             <h3>LLMs Belong in an Agentic MT System</h3>
             <p>
 				Simply swapping an NMT API for an LLM API isn't enough.
@@ -92,7 +92,7 @@
         </section>
 		</section>
 
-		<section class="content-section">
+		<section class="content-section fade-in-section">
 			<h2>The Platform</h2>
 			<p>
 				GlotBots is a managed platform that helps LSPs and enterprises deploy Agentic MT systems with ease. Choose from a library of domain‑specialized translation agents, configure them per end customer, then run automated workflows, directly integrated with your TM and MTPE process. Transparent subscription tiers with rollover and overage keep costs predictable, and all of them includes generous support.
@@ -115,7 +115,7 @@
 
 		</section>
 
-        <section class="content-section">
+        <section class="content-section fade-in-section">
             <h2>Meet Our First Agent: TechGlot</h2>
             <div class="grid-2">
                 <div>
@@ -132,18 +132,38 @@
             </div>
         </section>
 
-        <section class="content-section">
+        <section class="content-section fade-in-section">
             <h4>Ready to experience the next paradigm in translation?</h4>
             <div class="cta-container" style="margin-top: 2rem;">
                 <a href="#" class="cta-button obfuscated-mail" data-enc-email="bnBkL3R1cGN1cG1oQW1iZWZtdmkvc2JsdHA=">Get a Free Demo</a>
             </div>
         </section>
-    <footer>
+    <footer class="fade-in-section">
 		<div class="copyright">© 2026 GlotBots. All rights reserved.</div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Animation Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+
             // Globe Animation (Spinning effect)
             const longs = document.querySelectorAll('.long-spin');
             
